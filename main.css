@@ -25,6 +25,8 @@ html {
 	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+
+	margin-bottom: -20px;
 }
 
 #container {
@@ -32,4 +34,8 @@ html {
 	height: 450px;
 	margin: auto auto;
 	margin-top: 15%;
+}
+
+#second {
+	margin-top: -450px;
 }

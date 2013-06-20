@@ -11,6 +11,7 @@
 
 <div id="container">
 	<canvas id="main" width="450" height="450" ></canvas>
+	<canvas id="second" width="450" height="450" ></canvas>
 </div>
 
 </body>
