@@ -5,6 +5,17 @@ $(document).ready(function() {
       var y = canvas.height / 2;
       var radius = 70;
 
+      var b37;
+      var b38;
+      var b39;
+      var b40;
+      var b40b39;
+      var b40b37;
+      var b38b37;
+      var b38b39;
+
+      var interval = 0;
+
       var keys = [];
 
       draw_circle(x, y);
@@ -50,39 +61,112 @@ $(document).ready(function() {
             delete keys[e.which];
       });
 
+      function a37() {
+            x = x - 5;
+            y = y;
+            draw_circle(x, y);
+      }
+
+      function a38() {
+            x = x;
+            y = y - 5;
+            draw_circle(x, y);
+      }
+
+      function a39() {
+            x = x + 5;
+            y = y;
+            draw_circle(x, y);
+      }
+
+      function a40() {
+            x = x;
+            y = y + 5;
+            draw_circle(x, y);
+      }
+
+      function a40a39() {
+            x = x + 5;
+            y = y + 5;
+            draw_circle(x, y);
+      }
+
+      function a40a37() {
+            x = x - 5;
+            y = y + 5;
+            draw_circle(x, y);
+      }
+
+      function a38a37() {
+            x = x - 5;
+            y = y - 5;
+            draw_circle(x, y);
+      }
+
+      function a38a39() {
+            x = x + 5;
+            y = y - 5;
+            draw_circle(x, y);
+      }
+
       function move() {
             if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  x = x - 5;
-                  y = y;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b37 = self.setInterval(function() {
+                       a37();
+                       interval = 'b37';
+                  }, 50);
             } else if (!keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  x = x;
-                  y = y - 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b38 = self.setInterval(function() {
+                       a38();
+                       interval = 'b38'; 
+                  }, 50);
             } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  x = x;
-                  y = y + 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b40 = self.setInterval(function() {
+                       a40();
+                       interval = 'b40'; 
+                  }, 50);
             } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  x = x + 5;
-                  y = y;
-                  draw_circle(x, y);
-            } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  x = x + 5;
-                  y = y + 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b39 = self.setInterval(function() {
+                       a39();
+                       interval = 'b39'; 
+                  }, 50);
+            } 
+
+            /* There is no need for vertical movement for now (and vertical movement has some bugs in it)
+            /
+            /
+            /
+
+            else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
+                  clearInterval(eval(interval));
+                  b40b39 = self.setInterval(function() {
+                       a40a39();
+                       interval = 'b40b39'; 
+                  }, 50);
             } else if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  x = x - 5;
-                  y = y + 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b40b37 = self.setInterval(function() {
+                       a40a37();
+                       interval = 'b40b37'; 
+                  }, 50);
             } else if (keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  x = x - 5;
-                  y = y - 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b38b37 = self.setInterval(function() {
+                       a38a37();
+                       interval = 'b38b37'; 
+                  }, 50);
             } else if (!keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  x = x + 5;
-                  y = y - 5;
-                  draw_circle(x, y);
+                  clearInterval(eval(interval));
+                  b38b39 = self.setInterval(function() {
+                       a38a39();
+                       interval = 'b38b39'; 
+                  }, 50);
             }
+            
+            */
       } 
 });
