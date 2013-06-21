@@ -3,10 +3,12 @@ $(document).ready(function() {
       var context = canvas.getContext('2d');
       var x = canvas.width / 2;
       var y = canvas.height / 2;
-      var ms = 5;
-      var px = 1;
-      var rr = 5;
+      var ms = 300;
+      var px = 20;
+      var rr = 10;
       var borderEnd = 1;
+      var direction = null;
+      var length = 1;
 
       var b37;
       var b38;
@@ -16,6 +18,9 @@ $(document).ready(function() {
       var b40b37;
       var b38b37;
       var b38b39;
+
+      var snake = new Array;
+      var snakePrev = new Array;
 
       var interval = 0;
 
@@ -27,7 +32,8 @@ $(document).ready(function() {
       var x2 = 0;
       var y2 = 0;
 
-      draw_circle(x, y);
+      snake.push([x, y]);
+      draw_circleArray(snake);
       redraw_circle2();
 
       function redraw_circle2() {
@@ -41,77 +47,8 @@ $(document).ready(function() {
         context.clearRect(0, 0, canvas.width, canvas.height);
       }
 
-      function draw_circle(xD, yD) {
-            clearc();
-            
-            if (borderEnd == 1) {
-                if (xD+rr > canvas.width) {
-                    clearInterval(eval(interval));
-                    clearc();
-                    x = canvas.width / 2;
-                    y = canvas.height / 2;
-                    xD = x;
-                    yD = y;
-                    draw_circle(xD, yD);
-                } else if (xD-rr < 0) {
-                    clearInterval(eval(interval));
-                    clearc();
-                    x = canvas.width / 2;
-                    y = canvas.height / 2;
-                    xD = x;
-                    yD = y;
-                    draw_circle(xD, yD);
-                }
-
-                if (yD+rr > canvas.height) {
-                    clearInterval(eval(interval));
-                    clearc();
-                    x = canvas.width / 2;
-                    y = canvas.height / 2;
-                    xD = x;
-                    yD = y;
-                    draw_circle(xD, yD);
-                } else if (yD-rr < 0) {
-                    clearInterval(eval(interval));
-                    clearc();
-                    x = canvas.width / 2;
-                    y = canvas.height / 2;
-                    xD = x;
-                    yD = y;
-                    draw_circle(xD, yD);
-                }
-            } else {
-                /*
-                / Stops at canvas border if x of y tries to cross it
-                /
-
-                if (x+rr > canvas.width) {
-                      x = canvas.width-rr;
-                } else if (x-px < 0) {
-                      x = rr;
-                }
-
-                if (y+rr > canvas.height) {
-                      y = canvas.height-rr;
-                } else if (y-rr < 0) {
-                      y = rr;
-                }
-
-                */
-            }
-
-            context.beginPath();
-            context.arc(xD, yD, rr, 0, 2* Math.PI, true); 
-            context.fillStyle = 'red';
-            context.fill();
-            context.closePath();
-
-            if (yD > y2-(2*rr) && yD < y2-(2*rr) + rr+(2*rr) 
-            && xD > x2-(2*rr) && xD < x2-(2*rr) + rr+(2*rr)) {
-                context2.setTransform(1, 0, 0, 1, 0, 0);
-                context2.clearRect(0, 0, canvas2.width, canvas2.height);
-                redraw_circle2();
-            }
+      function growSnake() {
+                length = length +1;
       }
 
       function draw_circle2(x2, y2) {
@@ -147,28 +84,39 @@ $(document).ready(function() {
             delete keys[e.which];
       });
 
+      function doSmth(xa, ya, direction) {
+          snake.push([xa, ya, direction]);
+          clearc();
+          snake.splice(0, snake.length - length);
+          draw_circleArray(snake);
+      }
+
       function a37() {
             x = x - px;
             y = y;
-            draw_circle(x, y);
+            direction = 'left';
+            doSmth(x, y, direction);
       }
 
       function a38() {
             x = x;
             y = y - px;
-            draw_circle(x, y);
+            direction = 'up';
+            doSmth(x, y, direction);
       }
 
       function a39() {
             x = x + px;
             y = y;
-            draw_circle(x, y);
+            direction = 'right';
+            doSmth(x, y, direction);
       }
 
       function a40() {
             x = x;
             y = y + px;
-            draw_circle(x, y);
+            direction = 'down';
+            doSmth(x, y, direction);
       }
 
       function a40a39() {
@@ -221,38 +169,46 @@ $(document).ready(function() {
                        interval = 'b39'; 
                   }, ms);
             } 
+      }
 
-            /* There is no need for vertical movement for now (and vertical movement has some bugs in it)
-            /
-            /
-            /
-
-            else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
-                  b40b39 = self.setInterval(function() {
-                       a40a39();
-                       interval = 'b40b39'; 
-                  }, 50);
-            } else if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
-                  b40b37 = self.setInterval(function() {
-                       a40a37();
-                       interval = 'b40b37'; 
-                  }, 50);
-            } else if (keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
-                  b38b37 = self.setInterval(function() {
-                       a38a37();
-                       interval = 'b38b37'; 
-                  }, 50);
-            } else if (!keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
-                  b38b39 = self.setInterval(function() {
-                       a38a39();
-                       interval = 'b38b39'; 
-                  }, 50);
-            }
-            
-            */
+      function resetGame() {
+            clearInterval(eval(interval));
+            clearc();
+            snake = [[canvas.width / 2, canvas.height / 2]];
+            draw_circleArray(snake);
       } 
+
+      function draw_circleArray(snake) {
+            for (var i = 0; i < snake.length; i++) {
+                  context.beginPath();
+                  context.arc(snake[i][0], snake[i][1], rr, 0, 2* Math.PI, true); 
+                  context.fillStyle = 'red';
+                  context.fill();
+                  context.closePath();
+
+                  if (i == snake.length-1) {
+                      if (snake[i][1] > y2-(2*rr) && snake[i][1] < y2-(2*rr) + rr+(2*rr) 
+                      && snake[i][0] > x2-(2*rr) && snake[i][0] < x2-(2*rr) + rr+(2*rr)) {
+                            context2.setTransform(1, 0, 0, 1, 0, 0);
+                            context2.clearRect(0, 0, canvas2.width, canvas2.height);
+                            redraw_circle2();
+                            growSnake();
+                      }
+
+                      if (borderEnd == 1) {
+                        if (snake[i][0]+rr > canvas.width) {
+                            resetGame();
+                        } else if (snake[i][0]-rr < 0) {
+                            resetGame();
+                        }
+
+                        if (snake[i][1]+rr > canvas.height) {
+                            resetGame();
+                        } else if (snake[i][1]-rr < 0) {
+                            resetGame();
+                        }
+                    }
+                }
+            }
+        }
 });
