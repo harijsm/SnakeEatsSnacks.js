@@ -1,34 +1,24 @@
 $(document).ready(function() {
       var canvas = document.getElementById('main');
       var context = canvas.getContext('2d');
+      var canvas2 = document.getElementById('second');
+      var context2 = canvas2.getContext('2d');
       var x = canvas.width / 2;
       var y = canvas.height / 2;
       var ms = 300;
-      var px = 20;
-      var rr = 10;
+      var px = 14;
+      var rr = 7;
       var borderEnd = 1;
       var direction = null;
       var length = 1;
-
       var b37;
       var b38;
       var b39;
       var b40;
-      var b40b39;
-      var b40b37;
-      var b38b37;
-      var b38b39;
-
       var snake = new Array;
       var snakePrev = new Array;
-
       var interval = 0;
-
       var keys = [];
-
-      var canvas2 = document.getElementById('second');
-      var context2 = canvas2.getContext('2d');
-
       var x2 = 0;
       var y2 = 0;
 
@@ -48,7 +38,8 @@ $(document).ready(function() {
       }
 
       function growSnake() {
-                length = length +1;
+        length = length +1;
+        ms = 300 - length;
       }
 
       function draw_circle2(x2, y2) {
@@ -56,7 +47,6 @@ $(document).ready(function() {
             y2 = y2;
             context2.setTransform(1, 0, 0, 1, 0, 0);
             context2.clearRect(0, 0, canvas2.width, canvas2.height);
-    
             context2.beginPath();
             context2.arc(x2, y2, rr, 0, 2* Math.PI, true); 
             context2.fillStyle = 'blue';
@@ -66,17 +56,21 @@ $(document).ready(function() {
 
       $(document).keydown(function (e) {
             keys[e.which] = true;
-            if (x+6 > canvas.width) {
-                  x = canvas.width-6;
-            } else if (x-6 < 0) {
-                  x = 6;
+
+            if (borderEnd == 1) {
+                if (snake[snake.length-1][0]+rr > canvas.width) {
+                    resetGame();
+                } else if (snake[snake.length-1][0]-rr < 0) {
+                    resetGame();
+                }
+
+                if (snake[snake.length-1][1]+rr > canvas.height) {
+                    resetGame();
+                } else if (snake[snake.length-1][1]-rr < 0) {
+                    resetGame();
+                }
             }
 
-            if (y+6 > canvas.height) {
-                  y = canvas.height-6;
-            } else if (y-6 < 0) {
-                  y = 6;
-            }
             move();
       });
 
@@ -117,30 +111,6 @@ $(document).ready(function() {
             y = y + px;
             direction = 'down';
             doSmth(x, y, direction);
-      }
-
-      function a40a39() {
-            x = x + px;
-            y = y + px;
-            draw_circle(x, y);
-      }
-
-      function a40a37() {
-            x = x - px;
-            y = y + px;
-            draw_circle(x, y);
-      }
-
-      function a38a37() {
-            x = x - px;
-            y = y - px;
-            draw_circle(x, y);
-      }
-
-      function a38a39() {
-            x = x + px;
-            y = y - px;
-            draw_circle(x, y);
       }
 
       function move() {
