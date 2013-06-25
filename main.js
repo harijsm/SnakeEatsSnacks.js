@@ -172,6 +172,7 @@ $(document).ready(function() {
       function resetGame() {
             clearInterval(eval(interval));
             clearc();
+            length = 1;
             snake = [[snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][0], snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][1]]];
             draw_circleArray(snake);
       } 
@@ -184,20 +185,15 @@ $(document).ready(function() {
                   context.fill();
                   context.closePath();
 
-                  console.log(x2+"::"+y2);
-                  console.log(snake[i][0]+":"+snake[i][1]);
-
                   if (i == snake.length-1) {
-                      //if (snake[i][1] > y2-(2*rr) && snake[i][1] < y2-(2*rr) + rr+(2*rr) 
-                      //&& snake[i][0] > x2-(2*rr) && snake[i][0] < x2-(2*rr) + rr+(2*rr)) {
-                            if (snake[i][1] == y2 && snake[i][0] == x2) {
+                      if (snake[i][1] == y2 && snake[i][0] == x2) {
                             context2.setTransform(1, 0, 0, 1, 0, 0);
                             context2.clearRect(0, 0, canvas2.width, canvas2.height);
                             redraw_circle2();
                             growSnake();
                       }
 
-                      if (borderEnd == 1) {
+                    if (borderEnd == 1) {
                         if (snake[i][0]+rr > canvas.width) {
                             resetGame();
                         } else if (snake[i][0]-rr < 0) {
@@ -207,6 +203,12 @@ $(document).ready(function() {
                         if (snake[i][1]+rr > canvas.height) {
                             resetGame();
                         } else if (snake[i][1]-rr < 0) {
+                            resetGame();
+                        }
+                    }
+
+                    for (var z = 0; z < snake.length; z++) {
+                        if (snake[snake.length-1][1] == snake[z][1] && snake[snake.length-1][0] == snake[z][0] && z != snake.length-1) {
                             resetGame();
                         }
                     }
