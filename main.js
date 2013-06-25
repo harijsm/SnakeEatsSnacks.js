@@ -3,8 +3,6 @@ $(document).ready(function() {
       var context = canvas.getContext('2d');
       var canvas2 = document.getElementById('second');
       var context2 = canvas2.getContext('2d');
-      var x = canvas.width / 2;
-      var y = canvas.height / 2;
       var ms = 300;
       var px = 14;
       var rr = 7;
@@ -22,13 +20,26 @@ $(document).ready(function() {
       var x2 = 0;
       var y2 = 0;
 
+      var snackPoints = [];
+        for (var aa = 0; aa <= canvas.width; aa++) {
+          for (var bb = 0; bb <= canvas.height; bb++) {
+            if (aa % (2*rr) == 0 && bb % (2*rr) == 0 && bb >= rr && aa >= rr && aa < canvas.width-rr && bb < canvas.height-rr) {
+              snackPoints.push([aa, bb]);
+            }
+          }
+        }
+
+      var x = snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][0];
+      var y =snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][1];
+
       snake.push([x, y]);
       draw_circleArray(snake);
       redraw_circle2();
 
       function redraw_circle2() {
-        x2 = Math.floor((Math.random()*444)+1);
-        y2 = Math.floor((Math.random()*444)+1);
+        rand = Math.floor((Math.random()*snackPoints.length-1)+1);
+        x2 = snackPoints[rand][0];
+        y2 = snackPoints[rand][1];
         draw_circle2(x2, y2);
       }
 
@@ -52,9 +63,16 @@ $(document).ready(function() {
             context2.fillStyle = 'blue';
             context2.fill();
             context2.closePath();
+
+            context2.beginPath();
+            context2.rect(rr, rr, canvas.width-(2*rr), canvas.height-(2*rr));
+            context2.lineWidth = 1;
+            context2.strokeStyle = '#ccc';
+            context2.stroke();
       }
 
       $(document).keydown(function (e) {
+            keys = [];
             keys[e.which] = true;
 
             if (borderEnd == 1) {
@@ -113,27 +131,37 @@ $(document).ready(function() {
             doSmth(x, y, direction);
       }
 
+      function clearAllIntervals() {
+        clearInterval(b37);
+        clearInterval(b38);
+        clearInterval(b39);
+        clearInterval(b40);
+      }
+
       function move() {
-            if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
+        console.log(keys);
+        console.log(interval);
+
+            if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39") && interval != 'b37') {
+                  clearAllIntervals();
                   b37 = self.setInterval(function() {
                        a37();
                        interval = 'b37';
                   }, ms);
-            } else if (!keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
+            } else if (!keys.hasOwnProperty("37") && keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39") && interval != 'b38') {
+                  clearAllIntervals();
                   b38 = self.setInterval(function() {
                        a38();
                        interval = 'b38'; 
                   }, ms);
-            } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && !keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
+            } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && keys.hasOwnProperty("40") && !keys.hasOwnProperty("39") && interval != 'b40') {
+                  clearAllIntervals();
                   b40 = self.setInterval(function() {
                        a40();
                        interval = 'b40'; 
                   }, ms);
-            } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && keys.hasOwnProperty("39")) {
-                  clearInterval(eval(interval));
+            } else if (!keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && keys.hasOwnProperty("39") && interval != 'b39') {
+                  clearAllIntervals();
                   b39 = self.setInterval(function() {
                        a39();
                        interval = 'b39'; 
@@ -144,7 +172,7 @@ $(document).ready(function() {
       function resetGame() {
             clearInterval(eval(interval));
             clearc();
-            snake = [[canvas.width / 2, canvas.height / 2]];
+            snake = [[snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][0], snackPoints[Math.floor((Math.random()*snackPoints.length-1)+1)][1]]];
             draw_circleArray(snake);
       } 
 
@@ -156,9 +184,13 @@ $(document).ready(function() {
                   context.fill();
                   context.closePath();
 
+                  console.log(x2+"::"+y2);
+                  console.log(snake[i][0]+":"+snake[i][1]);
+
                   if (i == snake.length-1) {
-                      if (snake[i][1] > y2-(2*rr) && snake[i][1] < y2-(2*rr) + rr+(2*rr) 
-                      && snake[i][0] > x2-(2*rr) && snake[i][0] < x2-(2*rr) + rr+(2*rr)) {
+                      //if (snake[i][1] > y2-(2*rr) && snake[i][1] < y2-(2*rr) + rr+(2*rr) 
+                      //&& snake[i][0] > x2-(2*rr) && snake[i][0] < x2-(2*rr) + rr+(2*rr)) {
+                            if (snake[i][1] == y2 && snake[i][0] == x2) {
                             context2.setTransform(1, 0, 0, 1, 0, 0);
                             context2.clearRect(0, 0, canvas2.width, canvas2.height);
                             redraw_circle2();
