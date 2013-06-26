@@ -31,9 +31,8 @@ html {
 
 #container {
 	width: 450px;
-	height: 450px;
 	margin-left: -225px;
-	margin-top: -225px;
+	margin-top: -280px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -41,4 +40,23 @@ html {
 
 #second {
 	margin-top: -450px;
+}
+
+h1 {
+	color: #ccc;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+h2 {
+	color: #ccc;
+	font-size: 15px;
+	margin-top: 0;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+h2 a {
+	text-decoration: none;
+	color: #bbb;
 }
