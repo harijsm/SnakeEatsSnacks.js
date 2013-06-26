@@ -48,12 +48,14 @@ $(document).ready(function () {
       context.font = "20px Verdana";
       var grd3 = context.createLinearGradient(0, 190, 0, 280);
       grd3.addColorStop(0, '#424242');
-      grd3.addColorStop(1, '#ddd');
+      grd3.addColorStop(1, '#bbb');
       context.fillStyle = grd3;
       context.fillText("use the arrow keys to move", 115, 200);
       context.fillText("the snake (red dot) around", 120, 220);
-      context.fillText("make the snake larger by", 125, 245);
-      context.fillText("feeding her snacks (blue dots)", 105, 265);
+      context.fillText("make the snake larger by", 125, 250);
+      context.fillText("feeding her snacks (blue dots)", 105, 270);
+      context.fillText("press any arrow key to start", 110, 305);
+
       context.closePath();
     }
 
@@ -166,7 +168,6 @@ $(document).ready(function () {
     }
 
     function move() {
-        interval = 0;
         if (keys.hasOwnProperty("37") && !keys.hasOwnProperty("38") && !keys.hasOwnProperty("40") && !keys.hasOwnProperty("39") && interval != 'b37') {
             clearAllIntervals();
             b37 = self.setInterval(function () {
