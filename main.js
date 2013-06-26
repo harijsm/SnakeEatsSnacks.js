@@ -37,26 +37,7 @@ $(document).ready(function () {
     drawInstructions();
 
     function drawInstructions() {
-      var imageObj = new Image();
-
-      imageObj.onload = function() {
-        context.drawImage(imageObj, 125, 30);
-      };
-      imageObj.src = 'http://harijs.me/SnakeEatsSnacks.js/arrowkeys.png';
-
-      context.beginPath();
-      context.font = "20px Verdana";
-      var grd3 = context.createLinearGradient(0, 190, 0, 280);
-      grd3.addColorStop(0, '#424242');
-      grd3.addColorStop(1, '#bbb');
-      context.fillStyle = grd3;
-      context.fillText("use the arrow keys to move", 115, 200);
-      context.fillText("the snake (red dot) around", 120, 220);
-      context.fillText("make the snake larger by", 125, 250);
-      context.fillText("feeding her snacks (blue dots)", 105, 270);
-      context.fillText("press any arrow key to start", 110, 305);
-
-      context.closePath();
+      $("#instructions").fadeIn(900);
     }
 
     function redraw_circle2() {
@@ -193,6 +174,8 @@ $(document).ready(function () {
                 interval = 'b39';
             }, ms);
         }
+        
+        $("#instructions").fadeOut(900);
     }
 
     function resetGame() {

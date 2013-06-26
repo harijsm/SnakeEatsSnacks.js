@@ -60,3 +60,16 @@ h2 a {
 	text-decoration: none;
 	color: #bbb;
 }
+
+#instructions {
+	text-align: center;
+	margin-top: -370px;
+	display: none;
+}
+
+#instructions p {
+	margin: 0;
+	font-size: 14px;
+	font-family: Verdana;
+	color: #424242;
+}
